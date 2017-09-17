@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Rock.EmbeddedNativeLibrary\src\EmbeddedNativeLibrary.cs" Link="EmbeddedNativeLibrary.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Win32\libsodium.dll" />
     <EmbeddedResource Include="Win32\msvcr120.dll" />
     <EmbeddedResource Include="Win64\libsodium.dll" />

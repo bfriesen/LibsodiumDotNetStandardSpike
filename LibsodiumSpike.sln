@@ -5,14 +5,9 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibsodiumSpike", "LibsodiumSpike\LibsodiumSpike.csproj", "{47D84A0E-009D-4B7F-A290-4C62323A94A2}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rock.EmbeddedNativeLibrary.Shared", "Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.shproj", "{C1116D49-42AF-4045-A1DC-090A4F2F9FF5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibsodiumSpikeExample", "LibsodiumSpikeExample\LibsodiumSpikeExample.csproj", "{36B25A99-6936-4629-9B56-DC0F6B16FD17}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.projitems*{c1116d49-42af-4045-a1dc-090a4f2f9ff5}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
