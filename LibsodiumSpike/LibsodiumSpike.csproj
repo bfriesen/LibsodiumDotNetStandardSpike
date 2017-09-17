@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\LibsodiumSpike.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\LibsodiumSpike.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Win32\libsodium.dll" />
+    <None Remove="Win32\msvcr120.dll" />
+    <None Remove="Win64\libsodium.dll" />
+    <None Remove="Win64\msvcr120.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Win32\libsodium.dll" />
+    <EmbeddedResource Include="Win32\msvcr120.dll" />
+    <EmbeddedResource Include="Win64\libsodium.dll" />
+    <EmbeddedResource Include="Win64\msvcr120.dll" />
+  </ItemGroup>
+
+  <Import Project="..\Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.projitems" Label="Shared" />
+
+</Project>
