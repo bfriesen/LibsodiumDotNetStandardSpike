@@ -1,0 +1,3 @@
+[submodule "Rock.EmbeddedNativeLibrary"]
+	path = Rock.EmbeddedNativeLibrary
+	url = https://github.com/RockFramework/Rock.EmbeddedNativeLibrary.git
