@@ -31,9 +31,6 @@ namespace LibsodiumSpikeExample
             Console.WriteLine("Encrypted message, base-64 encoded: {0}", Convert.ToBase64String(ciphertext));
             Console.WriteLine("Decrypted message, base-64 encoded: {0}", Convert.ToBase64String(decrypted));
             Console.WriteLine("Decrypted message, UTF-8 decoded: {0}", Encoding.UTF8.GetString(decrypted));
-            Console.WriteLine();
-            Console.Write("Press any key to exit . . .");
-            Console.ReadKey(true);
         }
     }
 }
