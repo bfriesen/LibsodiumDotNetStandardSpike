@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace LibsodiumSpike
 {
@@ -22,6 +23,16 @@ namespace LibsodiumSpike
         /// The number of bytes in a secretbox nonce.
         /// </summary>
         public const int crypto_secretbox_NONCEBYTES = 24;
+
+        private static readonly Lazy<crypto_secretbox_easy_> _crypto_secretbox_easy;
+
+        private static readonly Lazy<crypto_secretbox_open_easy_> _crypto_secretbox_open_easy;
+
+        private static void init_crypto_secretbox(out Lazy<crypto_secretbox_easy_> crypto_secretbox_easy, out Lazy<crypto_secretbox_open_easy_> crypto_secretbox_open_easy)
+        {
+            crypto_secretbox_easy = _embeddedLibsodium.GetLazyDelegate<crypto_secretbox_easy_>(nameof(Sodium.crypto_secretbox_easy));
+            crypto_secretbox_open_easy = _embeddedLibsodium.GetLazyDelegate<crypto_secretbox_open_easy_>(nameof(Sodium.crypto_secretbox_open_easy));
+        }
 
         /// <summary>
         /// <para>
@@ -57,8 +68,7 @@ namespace LibsodiumSpike
         /// <param name="n">The nonce. Should be <see cref="crypto_secretbox_NONCEBYTES"/> bytes.</param>
         /// <param name="k">The key. Should be <see cref="crypto_secretbox_KEYBYTES"/> bytes.</param>
         /// <returns></returns>
-        [DllImport("libsodium", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int crypto_secretbox_easy(byte[] c, byte[] m, long mlen, byte[] n, byte[] k);
+        public static int crypto_secretbox_easy(byte[] c, byte[] m, long mlen, byte[] n, byte[] k) => _crypto_secretbox_easy.Value.Invoke(c, m, mlen, n, k);
 
         /// <summary>
         /// <para>
@@ -102,7 +112,12 @@ namespace LibsodiumSpike
         /// The key. Must match the key used to encrypt and authenticate the message.
         /// </param>
         /// <returns>-1 if the verification fails, 0 on success.</returns>
-        [DllImport("libsodium", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int crypto_secretbox_open_easy(byte[] m, byte[] c, long clen, byte[] n, byte[] k);
+        public static int crypto_secretbox_open_easy(byte[] m, byte[] c, long clen, byte[] n, byte[] k) => _crypto_secretbox_open_easy.Value.Invoke(m, c, clen, n, k);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate int crypto_secretbox_easy_(byte[] c, byte[] m, long mlen, byte[] n, byte[] k);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate int crypto_secretbox_open_easy_(byte[] m, byte[] c, long clen, byte[] n, byte[] k);
     }
 }

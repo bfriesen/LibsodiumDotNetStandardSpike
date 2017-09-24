@@ -9,14 +9,20 @@ namespace LibsodiumSpike
     /// </summary>
     public static partial class Sodium
     {
+        private static readonly EmbeddedNativeLibrary _embeddedLibsodium;
+
         static Sodium()
         {
-            EmbeddedNativeLibrary.Load("LibsodiumSpike",
+            _embeddedLibsodium = new EmbeddedNativeLibrary("libsodium", false,
                 new DllInfo(TargetRuntime.Win32, "LibsodiumSpike.Win32.libsodium.dll", "LibsodiumSpike.Win32.msvcr120.dll"),
-                new DllInfo(TargetRuntime.Win64, "LibsodiumSpike.Win64.libsodium.dll", "LibsodiumSpike.Win64.msvcr120.dll"));
+                new DllInfo(TargetRuntime.Win64, "LibsodiumSpike.Win64.libsodium.dll", "LibsodiumSpike.Win64.msvcr120.dll"),
+                new DllInfo(TargetRuntime.Linux, "LibsodiumSpike.Linux.libsodium.so"));
 
             if (sodium_init() == -1)
                 throw new InvalidOperationException("The libsodium library failed to initialize: sodium_init() returned -1.");
+            
+            init_randombytes(out _randombytes_buf);
+            init_crypto_secretbox(out _crypto_secretbox_easy, out _crypto_secretbox_open_easy);
         }
 
         /// <summary>
@@ -38,7 +44,9 @@ namespace LibsodiumSpike
         /// </para>
         /// </summary>
         /// <returns>-1 if the initialization fails, 0 on success.</returns>
-        [DllImport("libsodium", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int sodium_init();
+        private static int sodium_init() => _embeddedLibsodium.GetDelegate<sodium_init_>(nameof(sodium_init)).Invoke();
+        
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate int sodium_init_();
     }
 }
