@@ -17,6 +17,7 @@
     <None Remove="Win32\msvcr120.dll" />
     <None Remove="Win64\libsodium.dll" />
     <None Remove="Win64\msvcr120.dll" />
+    <None Remove="Linux\libsodium.so" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <EmbeddedResource Include="Win32\msvcr120.dll" />
     <EmbeddedResource Include="Win64\libsodium.dll" />
     <EmbeddedResource Include="Win64\msvcr120.dll" />
+    <EmbeddedResource Include="Linux\libsodium.so" />
   </ItemGroup>
 
   <Import Project="..\Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.projitems" Label="Shared" />
