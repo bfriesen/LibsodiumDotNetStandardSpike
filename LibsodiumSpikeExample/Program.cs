@@ -22,7 +22,7 @@ namespace LibsodiumSpikeExample
             if (Sodium.crypto_secretbox_open_easy(decrypted, ciphertext, ciphertext.Length, nonce, key) != 0)
             {
                 Console.WriteLine("Message forged!");
-            }
+            }   
 
             Console.WriteLine("Key, base-64 encoded: {0}", Convert.ToBase64String(key));
             Console.WriteLine("Nonce, base-64 encoded: {0}", Convert.ToBase64String(nonce));

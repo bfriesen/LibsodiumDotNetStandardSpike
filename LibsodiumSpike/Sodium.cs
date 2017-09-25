@@ -16,7 +16,8 @@ namespace LibsodiumSpike
             _embeddedLibsodium = new EmbeddedNativeLibrary("libsodium", false,
                 new DllInfo(TargetRuntime.Win32, "LibsodiumSpike.Win32.libsodium.dll", "LibsodiumSpike.Win32.msvcr120.dll"),
                 new DllInfo(TargetRuntime.Win64, "LibsodiumSpike.Win64.libsodium.dll", "LibsodiumSpike.Win64.msvcr120.dll"),
-                new DllInfo(TargetRuntime.Linux, "LibsodiumSpike.Linux.libsodium.so"));
+                new DllInfo(TargetRuntime.Linux, "LibsodiumSpike.Linux.libsodium.so"),
+                new DllInfo(TargetRuntime.Mac, "LibsodiumSpike.Mac.libsodium.dylib"));
 
             if (sodium_init() == -1)
                 throw new InvalidOperationException("The libsodium library failed to initialize: sodium_init() returned -1.");
