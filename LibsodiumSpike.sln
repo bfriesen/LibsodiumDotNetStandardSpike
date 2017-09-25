@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibsodiumSpike", "Libsodium
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibsodiumSpikeExample", "LibsodiumSpikeExample\LibsodiumSpikeExample.csproj", "{36B25A99-6936-4629-9B56-DC0F6B16FD17}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rock.EmbeddedNativeLibrary.Shared", "Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.shproj", "{C1116D49-42AF-4045-A1DC-090A4F2F9FF5}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Rock.EmbeddedNativeLibrary\src\Rock.EmbeddedNativeLibrary.Shared.projitems*{c1116d49-42af-4045-a1dc-090a4f2f9ff5}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
