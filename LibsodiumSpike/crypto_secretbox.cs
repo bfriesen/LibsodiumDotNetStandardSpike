@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if USE_FUNCTION_POINTER
+using System;
+#endif
 using System.Runtime.InteropServices;
 
 namespace LibsodiumSpike
@@ -24,6 +26,7 @@ namespace LibsodiumSpike
         /// </summary>
         public const int crypto_secretbox_NONCEBYTES = 24;
 
+#if USE_FUNCTION_POINTER
         private static readonly Lazy<crypto_secretbox_easy_> _crypto_secretbox_easy;
 
         private static readonly Lazy<crypto_secretbox_open_easy_> _crypto_secretbox_open_easy;
@@ -33,7 +36,7 @@ namespace LibsodiumSpike
             crypto_secretbox_easy = _embeddedLibsodium.GetLazyDelegate<crypto_secretbox_easy_>(nameof(Sodium.crypto_secretbox_easy));
             crypto_secretbox_open_easy = _embeddedLibsodium.GetLazyDelegate<crypto_secretbox_open_easy_>(nameof(Sodium.crypto_secretbox_open_easy));
         }
-
+#endif
         /// <summary>
         /// <para>
         /// The <see cref="crypto_secretbox_easy"/> function encrypts a message <paramref name="m"/> whose 
@@ -68,8 +71,12 @@ namespace LibsodiumSpike
         /// <param name="n">The nonce. Should be <see cref="crypto_secretbox_NONCEBYTES"/> bytes.</param>
         /// <param name="k">The key. Should be <see cref="crypto_secretbox_KEYBYTES"/> bytes.</param>
         /// <returns></returns>
+#if USE_FUNCTION_POINTER
         public static int crypto_secretbox_easy(byte[] c, byte[] m, long mlen, byte[] n, byte[] k) => _crypto_secretbox_easy.Value.Invoke(c, m, mlen, n, k);
-
+#else
+        [DllImport("libsodium")]
+        public static extern int crypto_secretbox_easy(byte[] c, byte[] m, long mlen, byte[] n, byte[] k);
+#endif
         /// <summary>
         /// <para>
         /// The <see cref="crypto_secretbox_open_easy"/> function verifies and decrypts a ciphertext
@@ -112,6 +119,7 @@ namespace LibsodiumSpike
         /// The key. Must match the key used to encrypt and authenticate the message.
         /// </param>
         /// <returns>-1 if the verification fails, 0 on success.</returns>
+#if USE_FUNCTION_POINTER
         public static int crypto_secretbox_open_easy(byte[] m, byte[] c, long clen, byte[] n, byte[] k) => _crypto_secretbox_open_easy.Value.Invoke(m, c, clen, n, k);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -119,5 +127,9 @@ namespace LibsodiumSpike
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate int crypto_secretbox_open_easy_(byte[] m, byte[] c, long clen, byte[] n, byte[] k);
+#else
+        [DllImport("libsodium")]
+        public static extern int crypto_secretbox_open_easy(byte[] m, byte[] c, long clen, byte[] n, byte[] k);
+#endif
     }
 }
